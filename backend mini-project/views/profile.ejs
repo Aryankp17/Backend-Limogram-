@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheet/index.css">
+</head>
+<body>
+    <div class="logout">
+        
+        <img src="/images/uploads/<%= user.profilepic %>"  alt="">
+        <a title="Update Profile Picture" href="/upload"><img src="images/uploads/edit.png" alt=""></a>
+        <a title="Logout" href="/logout">Logout</a>
+    </div>
+    <div class="container">
+        <h2>Welcome to Limogram!</h2>
+        <h5>Create a post:</h5>
+        <form action="/create-post" method="POST"> 
+            <textarea title="Write here" name="content" placeholder="What goes on your mind?"></textarea>
+            <button title="Post" type="submit">Post</button>
+        </form>
+
+            <div class="posts">
+                <h5>View Posts:</h5>
+    
+                <% if(user.posts.length > 0){ %>
+                    
+                        <% user.posts.forEach(function(post){ %>
+                            <div class="post">
+                                    <h4 title="Username">@<%= user.name %></h4>
+                                    <p><%= post.content %></p>
+                                    <div class="edit-post">
+                                        <span><%= post.likes.length%></span>
+                                        <a title="Like" href="/likes/<%=post._id%>">
+                                            <%= post.likes.indexOf(user._id) === -1 ? 'like' :'Unlike'%>
+                                        </a>
+                                        <a title="Edit" href="/edit-post/<%=post._id%>">edit</a>
+                                    </div>
+                            </div>
+                        <% }) %>
+                <% }else{ %>
+                    <h4>No posts yet. Create your first post!</h4>
+                    
+                <% } %>
+            </div>
+    </div>
+    
+</body>
+</html>
